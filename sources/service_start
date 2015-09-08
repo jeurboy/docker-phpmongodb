@@ -1,0 +1,13 @@
+#!/bin/sh
+
+cp /phpmongodb/config.inc.php /var/www/html/config.php
+
+sed -i \
+	-e "s/'name' => \"Localhost\"/'name' => \"$MONGO_SERVER\"/" \
+	-e "s/'host' => \"127.0.0.1\"/'host' => \"$MONGO_SERVER\"/" \
+	-e "s/'port' => \"27017\"/'port' => \"$MONGO_PORT\"/" \
+	-e "s/'user' => 'admin'/'user' => '$MONGO_USERNAME'/" \
+	-e "s/'password' => 'admin'/'password' => '$MONGO_PASSWORD'/" \
+    /var/www/html/config.php
+
+exec ./apache-run.sh
